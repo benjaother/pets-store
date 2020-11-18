@@ -92,11 +92,8 @@ public class PetServiceImpl implements PetService {
 	
 	private Category setCategory(int id) {
 		Category category = categoryRepository.findById(id);
-		
-		if (category == null) 
-			return null;
-		
-		return category;
-	}
+
+		return (category == null) ? null : category;
+	}	
 
 }

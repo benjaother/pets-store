@@ -16,9 +16,16 @@ public class UserServiceImp implements UserService {
 	private UserRepository userRepository;
 
 	public User findUserForLogin(String email, String password) {
-		//BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        //password = encoder.encode(password);
-		return userRepository.findByEmailAndPassword(email, password);
+		User userBD = userRepository.findByEmail(email);
+		
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		
+		if (encoder.matches(password, userBD.getPassword())) {
+			userBD.setPassword(null);
+			return userBD;
+		}
+		
+		return null;
 	}
 	
 	public List<User> listAllUsers(){
